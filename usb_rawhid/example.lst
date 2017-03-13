@@ -1,0 +1,136 @@
+   1               		.file	"example.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__ = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+  15               	.Ltext0:
+  16               		.section	.text.main,"ax",@progbits
+  17               	.global	main
+  19               	main:
+  20               	.LFB6:
+  21               	.LSM0:
+  22 0000 1F93      		push r17
+  23               	/* prologue: function */
+  24               	/* frame size = 0 */
+  25               	/* stack size = 1 */
+  26               	.L__stack_usage = 1
+  27               	.LSM1:
+  28 0002 80E8      		ldi r24,lo8(-128)
+  29 0004 8093 6100 		sts 97,r24
+  30 0008 1092 6100 		sts 97,__zero_reg__
+  31               	.LSM2:
+  32 000c 0E94 0000 		call usb_init
+  33               	.L2:
+  34               	.LSM3:
+  35 0010 0E94 0000 		call usb_configured
+  36 0014 8823      		tst r24
+  37 0016 01F0      		breq .L2
+  38               	.LVL0:
+  39               	.LBB4:
+  40               	.LBB5:
+  41               	.LSM4:
+  42 0018 8FEF      		 ldi r24,lo8(3199999)
+  43 001a 93ED      	    ldi r25,hi8(3199999)
+  44 001c A0E3      	    ldi r26,hlo8(3199999)
+  45 001e 8150      	    1:subi r24,1
+  46 0020 9040      	    sbci r25,0
+  47 0022 A040      	    sbci r26,0
+  48 0024 01F4      	    brne 1b
+  49 0026 00C0      		rjmp .
+  50 0028 0000      		nop
+  51               	.LBE5:
+  52               	.LBE4:
+  53               	.LSM5:
+  54 002a 14BC      		out 68-32,__zero_reg__
+  55               	.LSM6:
+  56 002c 85E0      		ldi r24,lo8(5)
+  57 002e 85BD      		out 69-32,r24
+  58               	.LSM7:
+  59 0030 81E0      		ldi r24,lo8(1)
+  60 0032 8093 6E00 		sts 110,r24
+  61               	.LSM8:
+  62 0036 8FEF      		ldi r24,lo8(-1)
+  63 0038 85B9      		out 37-32,r24
+  64               	.LSM9:
+  65 003a 80E4      		ldi r24,lo8(64)
+  66 003c 88B9      		out 40-32,r24
+  67               	.LSM10:
+  68 003e 8FEB      		ldi r24,lo8(-65)
+  69 0040 8BB9      		out 43-32,r24
+  70               	.LSM11:
+  71 0042 83EF      		ldi r24,lo8(-13)
+  72 0044 81BB      		out 49-32,r24
+  73               	.LSM12:
+  74 0046 13EF      		ldi r17,lo8(-13)
+  75               	.L3:
+  76               	.LSM13:
+  77 0048 83B1      		in r24,35-32
+  78 004a 8095      		com r24
+  79 004c 8093 0000 		sts buffer,r24
+  80               	.LSM14:
+  81 0050 99B1      		in r25,41-32
+  82 0052 86B1      		in r24,38-32
+  83 0054 8074      		andi r24,lo8(64)
+  84 0056 892B      		or r24,r25
+  85 0058 8095      		com r24
+  86 005a 8093 0000 		sts buffer+1,r24
+  87               	.LSM15:
+  88 005e 8FB1      		in r24,47-32
+  89 0060 8127      		eor r24,r17
+  90 0062 8093 0000 		sts buffer+2,r24
+  91               	.LSM16:
+  92 0066 80E0      		ldi r24,lo8(buffer)
+  93 0068 90E0      		ldi r25,hi8(buffer)
+  94 006a 62E0      		ldi r22,lo8(2)
+  95 006c 0E94 0000 		call usb_rawhid_send
+  96 0070 00C0      		rjmp .L3
+  97               	.LFE6:
+  99               		.section	.text.__vector_23,"ax",@progbits
+ 100               	.global	__vector_23
+ 102               	__vector_23:
+ 103               	.LFB7:
+ 104               	.LSM17:
+ 105 0000 1F92      		push __zero_reg__
+ 106 0002 0F92      		push r0
+ 107 0004 0FB6      		in r0,__SREG__
+ 108 0006 0F92      		push r0
+ 109 0008 1124      		clr __zero_reg__
+ 110               	/* prologue: Signal */
+ 111               	/* frame size = 0 */
+ 112               	/* stack size = 3 */
+ 113               	.L__stack_usage = 3
+ 114               	/* epilogue start */
+ 115               	.LSM18:
+ 116 000a 0F90      		pop r0
+ 117 000c 0FBE      		out __SREG__,r0
+ 118 000e 0F90      		pop r0
+ 119 0010 1F90      		pop __zero_reg__
+ 120 0012 1895      		reti
+ 121               	.LFE7:
+ 123               	.global	do_output
+ 124               	.global	do_output
+ 125               		.section .bss
+ 128               	do_output:
+ 129 0000 00        		.skip 1,0
+ 130               		.comm buffer,64,1
+ 163               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 example.c
+     /tmp/cc0gEH7r.s:2      *ABS*:000000000000003f __SREG__
+     /tmp/cc0gEH7r.s:3      *ABS*:000000000000003e __SP_H__
+     /tmp/cc0gEH7r.s:4      *ABS*:000000000000003d __SP_L__
+     /tmp/cc0gEH7r.s:5      *ABS*:0000000000000034 __CCP__
+     /tmp/cc0gEH7r.s:6      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cc0gEH7r.s:7      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cc0gEH7r.s:19     .text.main:0000000000000000 main
+                            *COM*:0000000000000040 buffer
+     /tmp/cc0gEH7r.s:102    .text.__vector_23:0000000000000000 __vector_23
+     /tmp/cc0gEH7r.s:128    .bss:0000000000000000 do_output
+
+UNDEFINED SYMBOLS
+usb_init
+usb_configured
+usb_rawhid_send
+__do_clear_bss
